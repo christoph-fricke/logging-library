@@ -2,21 +2,36 @@
   "private": true,
   "name": "logger",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "author": {
     "name": "Christoph Fricke"
   },
+  "main": "lib/umd/index.js",
+  "module": "lib/esm/index.js",
+  "types": "lib/types",
+  "sideEffects": false,
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE.md"
+  ],
   "scripts": {
+    "build": "rm -rf lib && rollup -c rollup.config.ts",
+    "format": "prettier --write .",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:cov": "jest --coverage"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
     "@types/jest": "^26.0.3",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
+    "rollup": "^2.18.2",
+    "rollup-plugin-filesize": "^9.0.2",
+    "rollup-plugin-typescript2": "^0.27.1",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
   },
