@@ -1,7 +1,7 @@
 # TS-Logger
 
-> Extendible logging module for Deno and Node. Inspired by Pino, Deno std/log
-> and dotnet ILogger.
+> Extendible logging module for Node and browsers. Inspired by Pino, Deno
+> std/log and .Net Core ILogger.
 
 ## Goals
 

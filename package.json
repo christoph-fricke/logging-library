@@ -7,10 +7,17 @@
   "author": {
     "name": "Christoph Fricke"
   },
+  "scripts": {
+    "test": "jest",
+    "test:cov": "jest --coverage"
+  },
   "devDependencies": {
+    "@types/jest": "^26.0.3",
     "husky": "^4.2.5",
+    "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
   },
   "husky": {
