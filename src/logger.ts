@@ -8,7 +8,7 @@ export interface ILogger {
   info(msg: string): void;
   warning(msg: string): void;
   error(err: string | Error): void;
-  fatal(err: string | Error): void;
+  critical(err: string | Error): void;
 
   /**
    * Creates a new `logger` scoped to a given `context`. All current handlers are
@@ -101,9 +101,9 @@ export class Logger implements ILogger {
     this.notifyHandlers(LogLevel.ERROR, message);
   }
 
-  fatal(err: string | Error) {
+  critical(err: string | Error) {
     const message = typeof err === "string" ? err : err.message;
 
-    this.notifyHandlers(LogLevel.FATAL, message);
+    this.notifyHandlers(LogLevel.CRITICAL, message);
   }
 }

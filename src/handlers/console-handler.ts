@@ -28,7 +28,7 @@ export class ConsoleHandler extends BaseHandler {
       case LogLevel.ERROR:
         console.error(this.format(record));
         break;
-      case LogLevel.FATAL:
+      case LogLevel.CRITICAL:
         console.error(this.format(record));
         break;
     }
