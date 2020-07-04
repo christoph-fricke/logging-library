@@ -16,7 +16,16 @@ export interface ILogger {
    * @param context New scope for the logger.
    */
   withContext(context: string): ILogger;
-  addHandler(handler: ILogHandler): ILogger;
+  /**
+   *
+   * @param handler Handler that receives created `ILogRecords`
+   * @param condition Optional condition for adding the `handler`.
+   * Allows `handlers` to be added conditionally while using a fluent api.
+   */
+  addHandler(
+    handler: ILogHandler,
+    condition?: boolean | (() => boolean)
+  ): ILogger;
 
   /**
    * Current context this logger is scoped to.
@@ -49,7 +58,13 @@ export class Logger implements ILogger {
     return this;
   }
 
-  addHandler(handler: ILogHandler): ILogger {
+  addHandler(
+    handler: ILogHandler,
+    condition?: boolean | (() => boolean)
+  ): ILogger {
+    if (typeof condition === "boolean" && !condition) return this;
+    if (typeof condition === "function" && !condition()) return this;
+
     this.handlers.push(handler);
     return this;
   }
