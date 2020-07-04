@@ -1,11 +1,18 @@
 {
-  "private": true,
-  "name": "logger",
-  "version": "1.0.0",
+  "name": "logging-library",
+  "version": "2.0.0",
   "license": "MIT",
-  "author": {
-    "name": "Christoph Fricke"
-  },
+  "author": "Christoph Fricke <christoph@frickeonline.de> (https://christoph-fricke.de)",
+  "description": "Extendible logger with simple api written in typescript.",
+  "keywords": [
+    "logging",
+    "logger",
+    "ts",
+    "typescript",
+    "context",
+    "extendible"
+  ],
+  "repository": "github:christoph-fricke/env-logger",
   "main": "lib/umd/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types",
@@ -17,6 +24,7 @@
   ],
   "scripts": {
     "build": "rm -rf lib && rollup -c rollup.config.ts",
+    "build:docs": "rm -rf docs && typedoc --out docs --mode file src",
     "format": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -33,6 +41,7 @@
     "rollup-plugin-filesize": "^9.0.2",
     "rollup-plugin-typescript2": "^0.27.1",
     "ts-jest": "^26.1.1",
+    "typedoc": "^0.17.8",
     "typescript": "^3.9.6"
   },
   "husky": {
