@@ -9,7 +9,7 @@ export class ConsoleHandler extends BaseHandler {
     ConsoleHandler.active = state ?? !ConsoleHandler.active;
   }
 
-  log(record: ILogRecord) {
+  protected log(record: ILogRecord) {
     if (!ConsoleHandler.active) return;
 
     switch (record.level) {

@@ -2,11 +2,12 @@ import { ILogRecord } from "./log-record";
 import { LogLevel } from "./log-level";
 
 export interface ILogHandler {
+  readonly level: LogLevel;
   handle(record: ILogRecord): void;
 }
 
 export abstract class BaseHandler implements ILogHandler {
-  private readonly level: LogLevel;
+  readonly level: LogLevel;
 
   constructor(level: LogLevel) {
     this.level = level;
@@ -18,5 +19,5 @@ export abstract class BaseHandler implements ILogHandler {
     this.log(record);
   }
 
-  abstract log(record: ILogRecord): void;
+  protected abstract log(record: ILogRecord): void;
 }
