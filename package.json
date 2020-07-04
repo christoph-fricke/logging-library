@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "Christoph Fricke <christoph@frickeonline.de> (https://christoph-fricke.de)",
-  "description": "Extendible logger with simple api written in typescript.",
+  "description": "Extensible logger with simple class based, fluent interface api written in typescript.",
   "keywords": [
     "logging",
     "logger",
@@ -12,6 +12,7 @@
     "context",
     "extendible"
   ],
+  "homepage": "https://logging-library.vercel.app",
   "repository": "github:christoph-fricke/env-logger",
   "main": "lib/umd/index.js",
   "module": "lib/esm/index.js",
