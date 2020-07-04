@@ -7,6 +7,7 @@ import { LogLevel } from "../log-level";
  * not flood the console.
  */
 export class TestHandler extends BaseHandler {
+  /** Queue with all log records handled by this handler. */
   public readonly records: ILogRecord[] = [];
 
   /**

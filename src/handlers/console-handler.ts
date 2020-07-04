@@ -2,11 +2,15 @@ import { BaseHandler } from "../handler";
 import { ILogRecord } from "../log-record";
 import { LogLevel } from "../log-level";
 
+/**
+ * Writes logs to the console with the native `console` object. Log format:
+ * ISO-time-string [context] message
+ */
 export class ConsoleHandler extends BaseHandler {
   private static active: boolean = true;
 
-  static toggle(state?: boolean) {
-    ConsoleHandler.active = state ?? !ConsoleHandler.active;
+  static toggle(active?: boolean) {
+    ConsoleHandler.active = active ?? !ConsoleHandler.active;
   }
 
   protected log(record: ILogRecord) {

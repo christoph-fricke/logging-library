@@ -176,8 +176,8 @@ interface ILogger {
 
 ### `LoggerStore`
 
-Uses a static map to store loggers globally. Using the same key twice, overrides
-the logger.
+Little helper class that uses a static map to store loggers globally. Using the
+same key twice, overrides a logger.
 
 ```typescript
 class LoggerStore {

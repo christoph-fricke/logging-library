@@ -3,11 +3,22 @@ import { ILogHandler } from "./handler";
 import { LogRecord } from "./log-record";
 
 export interface ILogger {
+  /** Sends a log record with the level TRACE to all handlers.*/
   trace(msg: string): void;
+
+  /** Sends a log record with the level DEBUG to all handlers.*/
   debug(msg: string): void;
+
+  /** Sends a log record with the level INFO to all handlers.*/
   info(msg: string): void;
+
+  /** Sends a log record with the level WARNING to all handlers.*/
   warning(msg: string): void;
+
+  /** Sends a log record with the level ERROR to all handlers.*/
   error(err: string | Error): void;
+
+  /** Sends a log record with the level CRITICAL to all handlers.*/
   critical(err: string | Error): void;
 
   /**

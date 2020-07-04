@@ -1,3 +1,6 @@
+/**
+ * Enum representing each log level.
+ */
 export enum LogLevel {
   TRACE = 10,
   DEBUG = 20,
