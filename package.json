@@ -1,6 +1,6 @@
 {
   "name": "logging-library",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "author": "Christoph Fricke <christoph@frickeonline.de> (https://christoph-fricke.de)",
   "description": "Extendible logger with simple api written in typescript.",
