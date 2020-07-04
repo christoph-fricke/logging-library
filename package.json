@@ -23,6 +23,7 @@
     "LICENSE.md"
   ],
   "scripts": {
+    "prepublishOnly": " npm test && npm run build",
     "build": "rm -rf lib && rollup -c rollup.config.ts",
     "build:docs": "rm -rf docs && typedoc --out docs --mode file src",
     "format": "prettier --write .",
