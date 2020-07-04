@@ -8,7 +8,7 @@ export default {
     {
       file: pkg.main,
       format: "umd",
-      name: "Logger",
+      name: "logging-library",
     },
     {
       file: pkg.module,
