@@ -1,7 +1,7 @@
 import { ILogger } from "./logger";
 
-export class LoggerManager {
-  private static store: Map<string, ILogger>;
+export class LoggerStore {
+  private static store: Map<string, ILogger> = new Map();
 
   static get(key: string): ILogger | undefined {
     return this.store.get(key);
