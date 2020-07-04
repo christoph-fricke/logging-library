@@ -40,9 +40,3 @@ export class ConsoleHandler extends BaseHandler {
     return `${timestring}\t[${record.context}]\t${record.msg}`;
   }
 }
-
-declare global {
-  function toggleLogging(state?: boolean): void;
-}
-
-globalThis.toggleLogging = ConsoleHandler.toggle;
