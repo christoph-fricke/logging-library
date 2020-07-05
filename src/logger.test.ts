@@ -104,13 +104,13 @@ describe("Logger", () => {
       if (typeof msg === "string") {
         logger[method](msg as string);
 
-        expect(handler.records[0].msg).toBe(msg);
+        expect(handler.records[0].message).toBe(msg);
         expect(handler.records[0].level).toBe(level);
       } else {
         // We have an error object as msg which is only for error or critical.
         logger[method as "error" | "critical"](msg);
 
-        expect(handler.records[0].msg).toBe(msg.message);
+        expect(handler.records[0].message).toBe(msg.message);
         expect(handler.records[0].level).toBe(level);
       }
     });

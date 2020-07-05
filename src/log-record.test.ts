@@ -6,8 +6,9 @@ describe("LogRecord", () => {
     const record = new LogRecord(LogLevel.INFO, "Test", "test message");
 
     expect(record.level).toBe(LogLevel.INFO);
+    expect(record.levelName).toBe("INFO");
     expect(record.context).toBe("Test");
-    expect(record.msg).toBe("test message");
+    expect(record.message).toBe("test message");
   });
 
   it("should include the current date", () => {

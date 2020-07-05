@@ -14,14 +14,14 @@ describe("ConsoleHandler", () => {
     it("should be able to use a custom format", () => {
       const mock = jest.spyOn(global.console, "info").mockImplementation();
       const format = (record: ILogRecord) =>
-        `${record.context} - ${record.msg}`;
+        `${record.context} - ${record.message}`;
 
       const handler = new ConsoleHandler(LogLevel.INFO, { format });
       handler.handle(
         buildLogRecord({
           level: LogLevel.INFO,
           context: "Test",
-          msg: "test message",
+          message: "test message",
         })
       );
 
@@ -38,7 +38,7 @@ describe("ConsoleHandler", () => {
       handler.handle(record);
 
       expect(mock).toHaveBeenCalledWith(
-        `${record.date.toISOString()}\t[${record.context}]\t${record.msg}`
+        `${record.date.toISOString()}\t[${record.context}]\t${record.message}`
       );
 
       mock.mockRestore();
