@@ -247,7 +247,7 @@ interface IConsoleHandlerOptions {
 ```
 
 You can change the output format by providing a `format` function as an `option`.
-Default output format is: `ISO-time-string [context] message`.
+Default output format is: `level: [context] - message`.
 
 The `ConsoleHandler` classed has a static `toggle` method with might be used in
 a browser to toggle of all logs in production but toggle them back on with a

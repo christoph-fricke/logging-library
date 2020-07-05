@@ -50,8 +50,6 @@ export class ConsoleHandler extends BaseHandler {
   }
 
   private defaultFormat(record: ILogRecord): string {
-    const timestring = record.date.toISOString();
-
-    return `${timestring}\t[${record.context}]\t${record.message}`;
+    return `${record.levelName}: [${record.context}] - ${record.message}`;
   }
 }
