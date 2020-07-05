@@ -1,6 +1,7 @@
 import { ConsoleHandler } from "./console-handler";
 import { LogLevel } from "../log-level";
 import { buildLogRecord } from "../test-helper/log-record-builder";
+import { ILogRecord } from "../log-record";
 
 describe("ConsoleHandler", () => {
   it("should initialize its level to the given level", () => {
@@ -9,55 +10,78 @@ describe("ConsoleHandler", () => {
     expect(handler.level).toBe(LogLevel.ERROR);
   });
 
-  it("should not handle a record with a lower level", () => {
-    const mock = jest.spyOn(global.console, "info").mockImplementation();
-    const handler = new ConsoleHandler(LogLevel.ERROR);
+  describe("format", () => {
+    it("should be able to use a custom format", () => {
+      const mock = jest.spyOn(global.console, "info").mockImplementation();
+      const format = (record: ILogRecord) =>
+        `${record.context} - ${record.msg}`;
 
-    handler.handle(buildLogRecord({ level: LogLevel.INFO }));
+      const handler = new ConsoleHandler(LogLevel.INFO, { format });
+      handler.handle(
+        buildLogRecord({
+          level: LogLevel.INFO,
+          context: "Test",
+          msg: "test message",
+        })
+      );
 
-    expect(mock).not.toHaveBeenCalled();
+      expect(mock).toHaveBeenCalledWith("Test - test message");
 
-    mock.mockRestore();
-  });
+      mock.mockRestore();
+    });
 
-  it("should use the correct format", () => {
-    const mock = jest.spyOn(global.console, "info").mockImplementation();
-    const handler = new ConsoleHandler(LogLevel.INFO);
-    const record = buildLogRecord({ level: LogLevel.INFO });
-
-    handler.handle(record);
-
-    expect(mock).toHaveBeenCalledWith(
-      `${record.date.toISOString()}\t[${record.context}]\t${record.msg}`
-    );
-
-    mock.mockRestore();
-  });
-
-  type Handle = "trace" | "debug" | "info" | "warn" | "error";
-  const tests: [LogLevel, Handle][] = [
-    [LogLevel.TRACE, "trace"],
-    [LogLevel.DEBUG, "debug"],
-    [LogLevel.INFO, "info"],
-    [LogLevel.WARNING, "warn"],
-    [LogLevel.ERROR, "error"],
-    [LogLevel.CRITICAL, "error"],
-  ];
-
-  it.each(tests)(
-    "should handle level %d with console method %s",
-    (level, handle) => {
-      const mock = jest.spyOn(global.console, handle).mockImplementation();
-      const handler = new ConsoleHandler(LogLevel.TRACE);
-      const record = buildLogRecord({ level });
+    it("should use the correct default format", () => {
+      const mock = jest.spyOn(global.console, "info").mockImplementation();
+      const handler = new ConsoleHandler(LogLevel.INFO);
+      const record = buildLogRecord({ level: LogLevel.INFO });
 
       handler.handle(record);
 
-      expect(mock).toHaveBeenCalledTimes(1);
+      expect(mock).toHaveBeenCalledWith(
+        `${record.date.toISOString()}\t[${record.context}]\t${record.msg}`
+      );
 
       mock.mockRestore();
-    }
-  );
+    });
+  });
+
+  describe("handle", () => {
+    it("should not handle a record with a lower level", () => {
+      const mock = jest.spyOn(global.console, "info").mockImplementation();
+      const handler = new ConsoleHandler(LogLevel.ERROR);
+
+      handler.handle(buildLogRecord({ level: LogLevel.INFO }));
+
+      expect(mock).not.toHaveBeenCalled();
+
+      mock.mockRestore();
+    });
+
+    type Handle = "trace" | "debug" | "info" | "warn" | "error";
+    const tests: [LogLevel, Handle][] = [
+      [LogLevel.TRACE, "trace"],
+      [LogLevel.DEBUG, "debug"],
+      [LogLevel.INFO, "info"],
+      [LogLevel.WARNING, "warn"],
+      [LogLevel.ERROR, "error"],
+      [LogLevel.CRITICAL, "error"],
+    ];
+
+    it.each(tests)(
+      "should handle level %d with console method %s",
+      (level, handle) => {
+        const mock = jest.spyOn(global.console, handle).mockImplementation();
+        const handler = new ConsoleHandler(LogLevel.TRACE);
+        const record = buildLogRecord({ level });
+
+        handler.handle(record);
+
+        expect(mock).toHaveBeenCalledTimes(1);
+
+        mock.mockRestore();
+      }
+    );
+  });
 
   describe("toggle", () => {
     it("should toggle of all ConsoleHandlers explicitly", () => {
