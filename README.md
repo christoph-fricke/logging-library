@@ -189,6 +189,26 @@ class LoggerStore {
 }
 ```
 
+### `ILogRecord`
+
+Every message logged by a logger is transformed into an object that implements
+`ILogRecord`. The constructed record is passed to every handler.
+
+```typescript
+interface ILogRecord {
+  /** Level used to create this record. */
+  readonly level: LogLevel;
+  /** String representation of the level. */
+  readonly levelName: keyof typeof LogLevel;
+  /** Context used for this record. */
+  readonly context: string;
+  /** Stored message. */
+  readonly message: string;
+  /** Timestamp at which the log record was created. */
+  readonly date: Date;
+}
+```
+
 ### ConsoleHandler
 
 Logs records the the corresponding method on the `console` object.
