@@ -111,14 +111,14 @@ format function in a second `options argument`.
 
 ```typescript
 const myFormat = (record: ILogRecord) =>
-  `${record.context} - ${record.message}`; // Return you custom format as a string.
+  `${record.levelName} - ${record.message}`; // Return you custom format as a string.
 
 const logger = new Logger().addHandler(
   new ConsoleHandler(LogLevel.INFO, { format: myFormat })
 );
 
 logger.info("With custom format.");
-// Default - With custom format.
+// INFO - With custom format.
 ```
 
 ## Create a custom handler:
