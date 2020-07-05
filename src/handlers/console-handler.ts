@@ -41,6 +41,6 @@ export class ConsoleHandler extends BaseHandler {
   private format(record: ILogRecord): string {
     const timestring = record.date.toISOString();
 
-    return `${timestring}\t[${record.context}]\t${record.msg}`;
+    return `${timestring}\t[${record.context}]\t${record.message}`;
   }
 }

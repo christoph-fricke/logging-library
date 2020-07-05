@@ -28,7 +28,7 @@ describe("ConsoleHandler", () => {
     handler.handle(record);
 
     expect(mock).toHaveBeenCalledWith(
-      `${record.date.toISOString()}\t[${record.context}]\t${record.msg}`
+      `${record.date.toISOString()}\t[${record.context}]\t${record.message}`
     );
 
     mock.mockRestore();
