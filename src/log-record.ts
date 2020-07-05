@@ -16,6 +16,7 @@ export interface ILogRecord {
 
 /**
  * Implements `ILogRecord`. Should be used to construct new records.
+ * @hidden
  */
 export class LogRecord implements ILogRecord {
   readonly level: LogLevel;

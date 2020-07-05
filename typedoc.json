@@ -1,0 +1,8 @@
+{
+  "inputFiles": "src",
+  "mode": "file",
+  "includeVersion": true,
+  "excludeNotExported": true,
+  "exclude": ["**/test-helper/**/*"],
+  "out": "docs"
+}
