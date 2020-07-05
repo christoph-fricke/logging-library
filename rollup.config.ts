@@ -16,7 +16,13 @@ export default {
     },
   ],
   plugins: [
-    typescript({ clean: true, useTsconfigDeclarationDir: true }),
+    typescript({
+      clean: true,
+      useTsconfigDeclarationDir: true,
+      // We don't want to ship declarations for the test files but excluding them
+      // in tsconfig.json destroys intellisense for vscode.
+      tsconfigOverride: { exclude: ["**/test-helper/**/*", "**/*.test.*"] },
+    }),
     fileSize(),
   ],
 };
