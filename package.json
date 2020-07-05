@@ -9,11 +9,13 @@
     "logger",
     "ts",
     "typescript",
+    "class based",
+    "fluent interface",
     "context",
-    "extendible"
+    "extensible"
   ],
   "homepage": "https://logging-library.vercel.app",
-  "repository": "github:christoph-fricke/env-logger",
+  "repository": "github:christoph-fricke/logging-library",
   "main": "lib/umd/index.js",
   "module": "lib/esm/index.js",
   "types": "lib/types",
