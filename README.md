@@ -10,7 +10,7 @@
 
 ## Goals
 
-- Provide a simpel, clean, extensible logging api.
+- Provide a simple, clean and extensible logging api.
 - Class based, [fluent interface](https://wikipedia.org/wiki/Fluent_interface)
   api.
 - Zero dependencies.
