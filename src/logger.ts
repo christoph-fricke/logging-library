@@ -80,7 +80,7 @@ export class Logger implements ILogger {
     return this;
   }
 
-  get context() {
+  get context(): string {
     return this._context;
   }
 
@@ -90,29 +90,29 @@ export class Logger implements ILogger {
     }
   }
 
-  trace(msg: string) {
+  trace(msg: string): void {
     this.notifyHandlers(LogLevel.TRACE, msg);
   }
 
-  debug(msg: string) {
+  debug(msg: string): void {
     this.notifyHandlers(LogLevel.DEBUG, msg);
   }
 
-  info(msg: string) {
+  info(msg: string): void {
     this.notifyHandlers(LogLevel.INFO, msg);
   }
 
-  warning(msg: string) {
+  warning(msg: string): void {
     this.notifyHandlers(LogLevel.WARNING, msg);
   }
 
-  error(err: string | Error) {
+  error(err: string | Error): void {
     const message = typeof err === "string" ? err : err.message;
 
     this.notifyHandlers(LogLevel.ERROR, message);
   }
 
-  critical(err: string | Error) {
+  critical(err: string | Error): void {
     const message = typeof err === "string" ? err : err.message;
 
     this.notifyHandlers(LogLevel.CRITICAL, message);

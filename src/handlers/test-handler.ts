@@ -17,7 +17,7 @@ export class TestHandler extends BaseHandler {
     super(level);
   }
 
-  protected log(record: ILogRecord) {
+  protected log(record: ILogRecord): void {
     this.records.push(record);
   }
 }

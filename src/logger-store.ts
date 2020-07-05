@@ -12,7 +12,7 @@ export class LoggerStore {
   }
 
   /** Add a logger to the given key or overrides it. */
-  static add(key: string, logger: ILogger) {
+  static add(key: string, logger: ILogger): void {
     this.store.set(key, logger);
   }
 

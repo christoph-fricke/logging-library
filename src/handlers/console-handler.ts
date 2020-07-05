@@ -7,13 +7,13 @@ import { LogLevel } from "../log-level";
  * ISO-time-string [context] message
  */
 export class ConsoleHandler extends BaseHandler {
-  private static active: boolean = true;
+  private static active = true;
 
-  static toggle(active?: boolean) {
+  static toggle(active?: boolean): void {
     ConsoleHandler.active = active ?? !ConsoleHandler.active;
   }
 
-  protected log(record: ILogRecord) {
+  protected log(record: ILogRecord): void {
     if (!ConsoleHandler.active) return;
 
     switch (record.level) {

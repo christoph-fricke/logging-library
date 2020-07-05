@@ -23,7 +23,7 @@ export abstract class BaseHandler implements ILogHandler {
     this.level = level;
   }
 
-  handle(record: ILogRecord) {
+  handle(record: ILogRecord): void {
     if (this.level > record.level) return;
 
     this.log(record);
