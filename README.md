@@ -221,7 +221,7 @@ Requires a min. LogLevel when initialized. Everything below this level will not
 be logged. Accepts an optional `options object` as a second argument.
 
 ```typescript
-interface ConsoleHandlerOptions {
+interface IConsoleHandlerOptions {
   format?: (record: ILogRecord) => string;
 }
 ```

@@ -2,7 +2,7 @@ import { BaseHandler } from "../handler";
 import { ILogRecord } from "../log-record";
 import { LogLevel } from "../log-level";
 
-interface ConsoleHandlerOptions {
+interface IConsoleHandlerOptions {
   format?: (record: ILogRecord) => string;
 }
 
@@ -15,7 +15,7 @@ export class ConsoleHandler extends BaseHandler {
 
   private readonly format: (record: ILogRecord) => string;
 
-  constructor(level: LogLevel, options?: ConsoleHandlerOptions) {
+  constructor(level: LogLevel, options?: IConsoleHandlerOptions) {
     super(level);
     this.format = options?.format ?? this.defaultFormat;
   }
