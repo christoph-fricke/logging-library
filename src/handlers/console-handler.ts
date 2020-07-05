@@ -2,12 +2,23 @@ import { BaseHandler } from "../handler";
 import { ILogRecord } from "../log-record";
 import { LogLevel } from "../log-level";
 
+interface IConsoleHandlerOptions {
+  format?: (record: ILogRecord) => string;
+}
+
 /**
  * Writes logs to the console with the native `console` object. Log format:
  * ISO-time-string [context] message
  */
 export class ConsoleHandler extends BaseHandler {
   private static active = true;
+
+  private readonly format: (record: ILogRecord) => string;
+
+  constructor(level: LogLevel, options?: IConsoleHandlerOptions) {
+    super(level);
+    this.format = options?.format ?? this.defaultFormat;
+  }
 
   static toggle(active?: boolean): void {
     ConsoleHandler.active = active ?? !ConsoleHandler.active;
@@ -38,9 +49,7 @@ export class ConsoleHandler extends BaseHandler {
     }
   }
 
-  private format(record: ILogRecord): string {
-    const timestring = record.date.toISOString();
-
-    return `${timestring}\t[${record.context}]\t${record.message}`;
+  private defaultFormat(record: ILogRecord): string {
+    return `${record.levelName}: [${record.context}] - ${record.message}`;
   }
 }

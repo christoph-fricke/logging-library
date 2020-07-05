@@ -10,9 +10,6 @@ import {
 } from "./";
 
 test("Core logging functionality works as expected", () => {
-  const date = new Date("2020-04-01T12:15:32.000Z");
-  jest.useFakeTimers("modern");
-  jest.setSystemTime(date);
   const mockInfo = jest.spyOn(global.console, "info").mockImplementation();
   const mockWarn = jest.spyOn(global.console, "warn").mockImplementation();
   const mockDebug = jest.spyOn(global.console, "debug").mockImplementation();
@@ -28,10 +25,10 @@ test("Core logging functionality works as expected", () => {
   scoped.debug("Some debug information");
 
   expect(mockInfo).toHaveBeenCalledWith(
-    `${date.toISOString()}\t[Default]\tSome log using the default context.`
+    `INFO: [Default] - Some log using the default context.`
   );
   expect(mockWarn).toHaveBeenCalledWith(
-    `${date.toISOString()}\t[Authentication]\tThis log is using the 'Authentication' context`
+    `WARNING: [Authentication] - This log is using the 'Authentication' context`
   );
   expect(mockDebug).not.toHaveBeenCalled();
 

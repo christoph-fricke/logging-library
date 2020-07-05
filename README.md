@@ -32,10 +32,17 @@
 
 ## Upcoming features
 
-1. Format function for handlers to custom format the logs.
 1. Exported default logger which can be overwritten.
 1. More handlers directly provided.
 1. Your idea? Let me know!
+
+## Installation
+
+```bash
+npm i logging-library
+# or
+yarn add logging-library
+```
 
 ## Usage
 
@@ -95,6 +102,23 @@ const scoped = logger.withContext("Authentication");
 
 // Nobody stops you from storing the scoped logger if needed...
 LoggerStore.add("auth", scoped);
+```
+
+## Provide a custom format:
+
+You can change the output format of the `ConsoleHandler` by providing a custom
+format function in a second `options argument`.
+
+```typescript
+const myFormat = (record: ILogRecord) =>
+  `${record.levelName} - ${record.message}`; // Return you custom format as a string.
+
+const logger = new Logger().addHandler(
+  new ConsoleHandler(LogLevel.INFO, { format: myFormat })
+);
+
+logger.info("With custom format.");
+// INFO - With custom format.
 ```
 
 ## Create a custom handler:
@@ -178,8 +202,8 @@ interface ILogger {
 
 ### `LoggerStore`
 
-Little helper class that uses a static map to store loggers globally. Using the
-same key twice, overrides a logger.
+> Little helper class that uses a static map to store loggers globally. Using
+> the same key twice, overrides a logger.
 
 ```typescript
 class LoggerStore {
@@ -211,9 +235,19 @@ interface ILogRecord {
 
 ### ConsoleHandler
 
-Logs records the the corresponding method on the `console` object.
+> Logs records the the corresponding method on the `console` object.
 
-Output format: `ISO-time-string [context] message`
+Requires a min. LogLevel when initialized. Everything below this level will not
+be logged. Accepts an optional `options object` as a second argument.
+
+```typescript
+interface IConsoleHandlerOptions {
+  format?: (record: ILogRecord) => string;
+}
+```
+
+You can change the output format by providing a `format` function as an `option`.
+Default output format is: `level: [context] - message`.
 
 The `ConsoleHandler` classed has a static `toggle` method with might be used in
 a browser to toggle of all logs in production but toggle them back on with a
@@ -229,8 +263,8 @@ globalThis.toggleConsoleLogging = ConsoleHandler.toggle;
 
 ### TestHandler
 
-Handler that writes all logs into a message queue which. Allows for assertions
-about logs during testing.
+> Handler that writes all logs into a message queue which. Allows for assertions
+> about logs during testing.
 
 ```typescript
 class TestHandler extends BaseHandler {
