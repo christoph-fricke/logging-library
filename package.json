@@ -62,7 +62,8 @@
       "prettier --write"
     ],
     "*.{ts,js}": [
-      "eslint"
+      "eslint",
+      "npm run test -- --watchAll false --bail --findRelatedTests"
     ]
   }
 }
