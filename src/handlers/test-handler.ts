@@ -13,7 +13,7 @@ export class TestHandler extends BaseHandler {
   /**
    * @param level Defaults to `TRACE`.
    */
-  constructor(level: LogLevel = LogLevel.TRACE) {
+  constructor(level: LogLevel | LogLevel[] = LogLevel.TRACE) {
     super(level);
   }
 

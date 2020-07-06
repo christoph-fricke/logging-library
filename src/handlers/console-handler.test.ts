@@ -4,10 +4,12 @@ import { buildLogRecord } from "../test-helper/log-record-builder";
 import { ILogRecord } from "../log-record";
 
 describe("ConsoleHandler", () => {
-  it("should initialize its level to the given level", () => {
+  it("should initialize its level to the given level or level array", () => {
     const handler = new ConsoleHandler(LogLevel.ERROR);
+    const handler2 = new ConsoleHandler([LogLevel.ERROR, LogLevel.DEBUG]);
 
     expect(handler.level).toBe(LogLevel.ERROR);
+    expect(handler2.level).toEqual([LogLevel.ERROR, LogLevel.DEBUG]);
   });
 
   describe("format", () => {
@@ -46,17 +48,6 @@ describe("ConsoleHandler", () => {
   });
 
   describe("handle", () => {
-    it("should not handle a record with a lower level", () => {
-      const mock = jest.spyOn(global.console, "info").mockImplementation();
-      const handler = new ConsoleHandler(LogLevel.ERROR);
-
-      handler.handle(buildLogRecord({ level: LogLevel.INFO }));
-
-      expect(mock).not.toHaveBeenCalled();
-
-      mock.mockRestore();
-    });
-
     type Handle = "trace" | "debug" | "info" | "warn" | "error";
     const tests: [LogLevel, Handle][] = [
       [LogLevel.TRACE, "trace"],
