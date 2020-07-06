@@ -5,7 +5,7 @@ import { buildLogRecord } from "./test-helper/log-record-builder";
 const logMock = jest.fn();
 class SpyHandler extends BaseHandler {
   // Little SpyHandler to test BaseHandler since BaseHandler is abstract.
-  // We want to test BaseHandler as it implements crucial logic that
+  // We want to test BaseHandler as it implements crucial logic that a
   // user handler might rely on.
   log = logMock;
 }
