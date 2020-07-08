@@ -9,7 +9,7 @@ describe("ConsoleHandler", () => {
     const handler2 = new ConsoleHandler([LogLevel.ERROR, LogLevel.DEBUG]);
 
     expect(handler.level).toBe(LogLevel.ERROR);
-    expect(handler2.level).toEqual([LogLevel.ERROR, LogLevel.DEBUG]);
+    expect(handler2.level).toStrictEqual([LogLevel.ERROR, LogLevel.DEBUG]);
   });
 
   describe("format", () => {

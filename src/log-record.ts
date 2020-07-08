@@ -14,6 +14,14 @@ export interface ILogRecord {
   readonly message: string;
   /** Timestamp at which the log record was created. */
   readonly date: Date;
+  /** Extra meta data configured with a logger. */
+  readonly metadata: Record<string, unknown>;
+}
+
+interface LogRecordConfig {
+  level: LogLevel;
+  context: string;
+  metadata: Record<string, unknown>;
 }
 
 /**
@@ -26,12 +34,14 @@ export class LogRecord implements ILogRecord {
   readonly context: string;
   readonly message: string;
   readonly date: Date;
+  readonly metadata: Record<string, unknown>;
 
-  constructor(level: LogLevel, context: string, msg: string) {
-    this.level = level;
-    this.levelName = getLogLevelName(level);
-    this.context = context;
-    this.message = msg;
+  constructor(message: string, config: LogRecordConfig) {
+    this.level = config.level;
+    this.levelName = getLogLevelName(config.level);
+    this.context = config.context;
+    this.message = message;
     this.date = new Date();
+    this.metadata = config.metadata;
   }
 }

@@ -9,6 +9,12 @@ describe("Logger", () => {
     expect(logger.context).toBe("Default");
   });
 
+  it("should be created with empty metadata", () => {
+    const logger = new Logger();
+
+    expect(logger.metadata).toStrictEqual({});
+  });
+
   it("should accept a context value when constructed", () => {
     const logger = new Logger("Test");
 
@@ -56,21 +62,68 @@ describe("Logger", () => {
     });
   });
 
-  describe("withContext", () => {
-    it("returns a logger with the given context", () => {
+  describe("addMetadata", () => {
+    it("returns the same logger instance for a fluent interface", () => {
       const logger = new Logger();
 
-      const res = logger.withContext("Test");
+      const res = logger.addMetadata({});
 
-      expect(res.context).toBe("Test");
+      expect(res).toBe(logger);
     });
 
+    it("adds given metadata to the metadata property", () => {
+      const logger = new Logger();
+
+      logger.addMetadata({ key1: 123, key2: "Test" });
+
+      expect(logger.metadata).toStrictEqual({ key1: 123, key2: "Test" });
+    });
+
+    it("merges new metadata with existing metadata and overwrites existing keys", () => {
+      const logger = new Logger().addMetadata({
+        key1: 123,
+        key2: "Test",
+        nested: { key1: "Test" },
+      });
+
+      logger.addMetadata({ key1: 456, nested: { key2: "Test" } });
+
+      expect(logger.metadata).toStrictEqual({
+        key1: 456,
+        key2: "Test",
+        nested: { key2: "Test" },
+      });
+    });
+
+    it("should merge by creating a new object", () => {
+      const logger = new Logger().addMetadata({
+        key1: 123,
+      });
+      const oldMeta = logger.metadata;
+
+      logger.addMetadata({ key2: 456 });
+
+      expect(oldMeta).not.toBe(logger.metadata);
+      expect(oldMeta).toStrictEqual({ key1: 123 });
+      expect(logger.metadata).toStrictEqual({ key1: 123, key2: 456 });
+    });
+  });
+
+  describe("withContext", () => {
     it("does not return the same logger instance", () => {
       const logger = new Logger();
 
       const res = logger.withContext("Test");
 
       expect(res).not.toBe(logger);
+    });
+
+    it("returns a logger with the given context", () => {
+      const logger = new Logger();
+
+      const res = logger.withContext("Test");
+
+      expect(res.context).toBe("Test");
     });
 
     it("copies all handlers to the new instance", () => {
@@ -81,6 +134,15 @@ describe("Logger", () => {
 
       res.debug("test message");
       expect(handler.records).toHaveLength(1);
+    });
+
+    it("copies existing metadata to the new instance", () => {
+      const logger = new Logger().addMetadata({ key: 123 });
+
+      const res = logger.withContext("Test");
+
+      expect(logger.metadata).not.toBe(res.metadata);
+      expect(res.metadata).toStrictEqual({ key: 123 });
     });
   });
 
@@ -97,22 +159,25 @@ describe("Logger", () => {
   ];
 
   describe.each(tests)("%s", (method, msg, level) => {
-    it(`creates a log record with the given message and level ${level}`, () => {
+    it(`creates a log record with the given message, metadata and level ${level}`, () => {
       const handler = new TestHandler();
-      const logger = new Logger().addHandler(handler);
+      const logger = new Logger()
+        .addMetadata({ key1: "Test" })
+        .addHandler(handler);
 
       if (typeof msg === "string") {
         logger[method](msg as string);
 
         expect(handler.records[0].message).toBe(msg);
-        expect(handler.records[0].level).toBe(level);
       } else {
         // We have an error object as msg which is only for error or critical.
         logger[method as "error" | "critical"](msg);
 
         expect(handler.records[0].message).toBe(msg.message);
-        expect(handler.records[0].level).toBe(level);
       }
+
+      expect(handler.records[0].level).toBe(level);
+      expect(handler.records[0].metadata).toStrictEqual({ key1: "Test" });
     });
 
     it("should notify all configured handlers", () => {
