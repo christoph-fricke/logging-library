@@ -2,7 +2,7 @@
  * Enum representing each log level.
  */
 export enum LogLevel {
-  TRACE = 10,
+  VERBOSE = 10,
   DEBUG = 20,
   INFO = 30,
   WARNING = 40,
@@ -18,8 +18,8 @@ export enum LogLevel {
  */
 export function getLogLevelName(level: LogLevel): keyof typeof LogLevel {
   switch (level) {
-    case LogLevel.TRACE:
-      return "TRACE";
+    case LogLevel.VERBOSE:
+      return "VERBOSE";
     case LogLevel.DEBUG:
       return "DEBUG";
     case LogLevel.INFO:

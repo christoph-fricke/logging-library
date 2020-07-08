@@ -3,8 +3,8 @@ import { ILogHandler } from "./handler";
 import { LogRecord } from "./log-record";
 
 export interface ILogger {
-  /** Sends a log record with the level TRACE to all handlers.*/
-  trace(msg: string): void;
+  /** Sends a log record with the level VERBOSE to all handlers.*/
+  verbose(msg: string): void;
 
   /** Sends a log record with the level DEBUG to all handlers.*/
   debug(msg: string): void;
@@ -90,8 +90,8 @@ export class Logger implements ILogger {
     }
   }
 
-  trace(msg: string): void {
-    this.notifyHandlers(LogLevel.TRACE, msg);
+  verbose(msg: string): void {
+    this.notifyHandlers(LogLevel.VERBOSE, msg);
   }
 
   debug(msg: string): void {

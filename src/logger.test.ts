@@ -84,9 +84,9 @@ describe("Logger", () => {
     });
   });
 
-  type Method = "trace" | "debug" | "info" | "warning" | "error" | "critical";
+  type Method = "verbose" | "debug" | "info" | "warning" | "error" | "critical";
   const tests: [Method, string | Error, LogLevel][] = [
-    ["trace", "test message", LogLevel.TRACE],
+    ["verbose", "test message", LogLevel.VERBOSE],
     ["debug", "test message", LogLevel.DEBUG],
     ["info", "test message", LogLevel.INFO],
     ["warning", "test message", LogLevel.WARNING],

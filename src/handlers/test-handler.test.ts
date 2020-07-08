@@ -17,10 +17,10 @@ describe("TestHandler", () => {
     expect(handler.records).toEqual([]);
   });
 
-  it("should use TRACE as an default level", () => {
+  it("should use VERBOSE as an default level", () => {
     const handler = new TestHandler();
 
-    expect(handler.level).toBe(LogLevel.TRACE);
+    expect(handler.level).toBe(LogLevel.VERBOSE);
   });
 
   it("adds a given record into a record array", () => {
