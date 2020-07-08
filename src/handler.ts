@@ -6,7 +6,7 @@ import { LogLevel } from "./log-level";
  * Alternatively custom handlers can extend the abstract class `BaseHandler`.
  */
 export interface ILogHandler {
-  readonly level: LogLevel;
+  readonly level: LogLevel | LogLevel[];
   handle(record: ILogRecord): void;
 }
 
@@ -17,13 +17,14 @@ export interface ILogHandler {
  * implementation.
  */
 export abstract class BaseHandler implements ILogHandler {
-  readonly level: LogLevel;
+  readonly level: LogLevel | LogLevel[];
 
-  constructor(level: LogLevel) {
+  constructor(level: LogLevel | LogLevel[]) {
     this.level = level;
   }
 
   handle(record: ILogRecord): void {
+    if (Array.isArray(this.level) && !this.level.includes(record.level)) return;
     if (this.level > record.level) return;
 
     this.log(record);

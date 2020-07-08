@@ -13,7 +13,7 @@ export class TestHandler extends BaseHandler {
   /**
    * @param level Defaults to `VERBOSE`.
    */
-  constructor(level: LogLevel = LogLevel.VERBOSE) {
+  constructor(level: LogLevel | LogLevel[] = LogLevel.VERBOSE) {
     super(level);
   }
 

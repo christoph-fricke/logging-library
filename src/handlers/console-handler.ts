@@ -15,7 +15,7 @@ export class ConsoleHandler extends BaseHandler {
 
   private readonly format: (record: ILogRecord) => string;
 
-  constructor(level: LogLevel, options?: IConsoleHandlerOptions) {
+  constructor(level: LogLevel | LogLevel[], options?: IConsoleHandlerOptions) {
     super(level);
     this.format = options?.format ?? this.defaultFormat;
   }

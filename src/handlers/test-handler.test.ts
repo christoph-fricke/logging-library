@@ -3,10 +3,24 @@ import { buildLogRecord } from "../test-helper/log-record-builder";
 import { LogLevel } from "../log-level";
 
 describe("TestHandler", () => {
+  it("should initialize its level to the given level or level array", () => {
+    const handler = new TestHandler(LogLevel.ERROR);
+    const handler2 = new TestHandler([LogLevel.ERROR, LogLevel.DEBUG]);
+
+    expect(handler.level).toBe(LogLevel.ERROR);
+    expect(handler2.level).toEqual([LogLevel.ERROR, LogLevel.DEBUG]);
+  });
+
   it("should have an empty record array after initialization", () => {
     const handler = new TestHandler();
 
     expect(handler.records).toEqual([]);
+  });
+
+  it("should use VERBOSE as an default level", () => {
+    const handler = new TestHandler();
+
+    expect(handler.level).toBe(LogLevel.VERBOSE);
   });
 
   it("adds a given record into a record array", () => {
@@ -16,20 +30,5 @@ describe("TestHandler", () => {
     handler.handle(record);
 
     expect(handler.records).toContain(record);
-  });
-
-  it("should use VERBOSE as an default level", () => {
-    const handler = new TestHandler();
-
-    expect(handler.level).toBe(LogLevel.VERBOSE);
-  });
-
-  it("should not add a record with a lower level", () => {
-    const handler = new TestHandler(LogLevel.WARNING);
-    const record = buildLogRecord({ level: LogLevel.INFO });
-
-    handler.handle(record);
-
-    expect(handler.records).toEqual([]);
   });
 });
