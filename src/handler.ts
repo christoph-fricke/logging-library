@@ -7,7 +7,7 @@ import { LogLevel } from "./log-level";
  */
 export interface ILogHandler {
   readonly level: LogLevel | LogLevel[];
-  handle(record: ILogRecord | LogLevel[]): void;
+  handle(record: ILogRecord): void;
 }
 
 /**
