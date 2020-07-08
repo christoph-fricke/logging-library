@@ -53,15 +53,16 @@ Basic usage:
 ```typescript
 import { Logger, ConsoleHandler, LogLevel } from "logging-library";
 
-// Create a logger instance and attach a console handler with level INFO as well
+// Create a logger instance and attach a console handler with level INFO and above as well
 // as a custom handler with level WARN.
 const logger = new Logger()
   .addHandler(new ConsoleHandler(LogLevel.INFO))
-  .addHandler(new CustomHandler(LogLevel.WARN));
+  .addHandler(new CustomHandler([LogLevel.WARN, LogLevel.INFO]));
+// A handler can also be configured to only work for specific levels by passing in an array like above.
 
 // addHandler takes an optional second argument which determines where the handler is
 // actually added. Might be useful to only add a logger in Development. Example:
-const logger = new Logger().addHandler(
+const logger2 = new Logger().addHandler(
   new ConsoleHandler(LogLevel.INFO),
   process.env.NODE_ENV === "development"
 );
@@ -134,7 +135,7 @@ Every handler must implement the `ILogHandler` interface to be usable.
 
 ```typescript
 interface ILogHandler {
-  readonly level: LogLevel;
+  readonly level: LogLevel | LogLevel[];
   handle(record: ILogRecord): void;
 }
 ```
@@ -148,7 +149,7 @@ method which is called for all passed `LogRecords`.
 import { BaseHandler } from "logging-library";
 
 class CustomHandler extends BaseHandler {
-  constructor(level: LogLevel) {
+  constructor(level: LogLevel | LogLevel[]) {
     super(level);
   }
 
@@ -270,7 +271,7 @@ globalThis.toggleConsoleLogging = ConsoleHandler.toggle;
 class TestHandler extends BaseHandler {
   public readonly records: ILogRecord[] = [];
 
-  constructor(level: LogLevel = LogLevel.VERBOSE) {
+  constructor(level: LogLevel | LogLevel[] = LogLevel.VERBOSE) {
     super(level);
   }
 
