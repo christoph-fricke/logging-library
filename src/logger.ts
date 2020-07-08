@@ -22,13 +22,15 @@ export interface ILogger {
   critical(err: string | Error): void;
 
   /**
-   * Creates a new `logger` scoped to a given `context`. All current handlers are
-   * copied over to the logger.
+   * Creates a new `logger` scoped to a given `context`. All current handlers and metadata
+   * is copied over to the logger.
    * @param context New scope for the logger.
    */
   withContext(context: string): ILogger;
+
   /**
-   *
+   * Attaches an `ILogHandler` to this instance. All created `ILogRecord`s will
+   * be passed to the given handler.
    * @param handler Handler that receives created `ILogRecords`
    * @param condition Optional condition for adding the `handler`.
    * Allows `handlers` to be added conditionally while using a fluent api.
@@ -39,13 +41,26 @@ export interface ILogger {
   ): ILogger;
 
   /**
+   * Adds a metadata object to the logger which will be included in created `ILogRecord`s.
+   * New metadata will be merged with existing metadata. Existing keys will be overwritten.
+   * @param metadata Metadata to add to the logger
+   */
+  addMetadata(metadata: Record<string, unknown>): ILogger;
+
+  /**
    * Current context this logger is scoped to.
    */
   readonly context: string;
+
+  /**
+   * Current metadata stored on this logger.
+   */
+  readonly metadata: Record<string, unknown>;
 }
 
 export class Logger implements ILogger {
   private readonly _context: string;
+  private _metadata: Record<string, unknown> = {};
   private handlers: ILogHandler[] = [];
 
   /**
@@ -57,8 +72,24 @@ export class Logger implements ILogger {
     this._context = context ?? "Default";
   }
 
+  get context(): string {
+    return this._context;
+  }
+
+  get metadata(): Record<string, unknown> {
+    return this._metadata;
+  }
+
   withContext(context: string): ILogger {
-    return new Logger(context).addHandlers(this.handlers);
+    return new Logger(context)
+      .addHandlers(this.handlers)
+      .addMetadata(this.metadata);
+  }
+
+  addMetadata(metadata: Record<string, unknown>): ILogger {
+    this._metadata = { ...this._metadata, ...metadata };
+
+    return this;
   }
 
   private addHandlers(handlers: ILogHandler[]): ILogger {
@@ -80,13 +111,15 @@ export class Logger implements ILogger {
     return this;
   }
 
-  get context(): string {
-    return this._context;
-  }
-
   private notifyHandlers(level: LogLevel, message: string) {
     for (const handler of this.handlers) {
-      handler.handle(new LogRecord(level, this._context, message));
+      handler.handle(
+        new LogRecord(message, {
+          level,
+          context: this._context,
+          metadata: this._metadata,
+        })
+      );
     }
   }
 

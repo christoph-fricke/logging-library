@@ -8,13 +8,13 @@ describe("TestHandler", () => {
     const handler2 = new TestHandler([LogLevel.ERROR, LogLevel.DEBUG]);
 
     expect(handler.level).toBe(LogLevel.ERROR);
-    expect(handler2.level).toEqual([LogLevel.ERROR, LogLevel.DEBUG]);
+    expect(handler2.level).toStrictEqual([LogLevel.ERROR, LogLevel.DEBUG]);
   });
 
   it("should have an empty record array after initialization", () => {
     const handler = new TestHandler();
 
-    expect(handler.records).toEqual([]);
+    expect(handler.records).toStrictEqual([]);
   });
 
   it("should use VERBOSE as an default level", () => {

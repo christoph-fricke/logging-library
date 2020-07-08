@@ -20,7 +20,7 @@ describe("BaseHandler", () => {
   it("should accept an level array as a constructor argument", () => {
     const handler = new SpyHandler([LogLevel.INFO, LogLevel.CRITICAL]);
 
-    expect(handler.level).toEqual([LogLevel.INFO, LogLevel.CRITICAL]);
+    expect(handler.level).toStrictEqual([LogLevel.INFO, LogLevel.CRITICAL]);
   });
 
   describe("handle", () => {
