@@ -3,6 +3,6 @@
   "mode": "file",
   "includeVersion": true,
   "excludeNotExported": true,
-  "exclude": ["**/test-helper/**/*"],
+  "exclude": ["**/test-helper/**/*", "**/*.test.*"],
   "out": "docs"
 }
