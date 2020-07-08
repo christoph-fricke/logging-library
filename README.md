@@ -26,6 +26,7 @@
    `TestHandler`.
 1. Six different log levels. `VERBOSE`, `DEBUG`, `INFO`, `WARNING`, `ERROR` and
    `CRITICAL`.
+1. Attach any metadata to you logs for advanced, structured logging.
 1. [Fluent interface](https://wikipedia.org/wiki/Fluent_interface) for easy
    configuration.
 1. Manage multiple logger instances globally within the `LoggerStore`.
@@ -161,6 +162,36 @@ class CustomHandler extends BaseHandler {
 }
 ```
 
+## Attaching metadata:
+
+This library attaches a `metadata` object to every created log record. Metadata
+can store any information you need. Add multiple metadata objects will merge the
+objects together with "new" objects overwriting keys of "old" objects.
+
+```typescript
+// Metadata is provided to all handlers in the metadata property of a record
+class MetaHandler extends BaseHandler {
+  constructor(level: LogLevel | LogLevel[]) {
+    super(level);
+  }
+
+  protected log(record: ILogRecord) {
+    console.log(record.metadata);
+  }
+}
+
+const logger = new Logger()
+  .addMetadata({ pid: 123, hostname: "example.com" })
+  .addMetadata({ key1: "Some more meta" })
+  .addHandler(new MetaHandler(LogLevel.INFO));
+
+// Allows you to check the current metadata in case you need to.
+logger.metadata; // { pid: 123, hostname: "example.com", key1: "Some more meta" }
+
+logger.info("Test message");
+// Log from MetaHandler: { pid: 123, hostname: "example.com", key1: "Some more meta" }
+```
+
 ## Api (Also see [reference](https://logging-library.vercel.app))
 
 ### `Loglevel`
@@ -196,8 +227,10 @@ interface ILogger {
     handler: ILogHandler,
     condition?: boolean | (() => boolean)
   ): ILogger;
+  addMetadata(metadata: Record<string, unknown>): ILogger;
 
   readonly context: string;
+  readonly metadata: Record<string, unknown>;
 }
 ```
 
@@ -231,6 +264,8 @@ interface ILogRecord {
   readonly message: string;
   /** Timestamp at which the log record was created. */
   readonly date: Date;
+  /** Extra meta data configured with a logger. */
+  readonly metadata: Record<string, unknown>;
 }
 ```
 
@@ -247,8 +282,8 @@ interface IConsoleHandlerOptions {
 }
 ```
 
-You can change the output format by providing a `format` function as an `option`.
-Default output format is: `level: [context] - message`.
+You can change the output format by providing a `format` function as an
+`option`. Default output format is: `level: [context] - message`.
 
 The `ConsoleHandler` classed has a static `toggle` method with might be used in
 a browser to toggle of all logs in production but toggle them back on with a
