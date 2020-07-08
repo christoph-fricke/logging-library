@@ -59,7 +59,7 @@ test("Core custom handler functionality works as expected", () => {
       CustomHandler.records.push(record);
     }
   }
-  const logger = new Logger().addHandler(new CustomHandler(LogLevel.TRACE));
+  const logger = new Logger().addHandler(new CustomHandler(LogLevel.VERBOSE));
 
   logger.info("test message");
 

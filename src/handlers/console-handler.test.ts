@@ -57,9 +57,9 @@ describe("ConsoleHandler", () => {
       mock.mockRestore();
     });
 
-    type Handle = "trace" | "debug" | "info" | "warn" | "error";
+    type Handle = "debug" | "info" | "warn" | "error";
     const tests: [LogLevel, Handle][] = [
-      [LogLevel.TRACE, "trace"],
+      [LogLevel.VERBOSE, "debug"],
       [LogLevel.DEBUG, "debug"],
       [LogLevel.INFO, "info"],
       [LogLevel.WARNING, "warn"],
@@ -71,7 +71,7 @@ describe("ConsoleHandler", () => {
       "should handle level %d with console method %s",
       (level, handle) => {
         const mock = jest.spyOn(global.console, handle).mockImplementation();
-        const handler = new ConsoleHandler(LogLevel.TRACE);
+        const handler = new ConsoleHandler(LogLevel.VERBOSE);
         const record = buildLogRecord({ level });
 
         handler.handle(record);
@@ -86,8 +86,8 @@ describe("ConsoleHandler", () => {
   describe("toggle", () => {
     it("should toggle of all ConsoleHandlers explicitly", () => {
       const mock = jest.spyOn(global.console, "info").mockImplementation();
-      const handler1 = new ConsoleHandler(LogLevel.TRACE);
-      const handler2 = new ConsoleHandler(LogLevel.TRACE);
+      const handler1 = new ConsoleHandler(LogLevel.VERBOSE);
+      const handler2 = new ConsoleHandler(LogLevel.VERBOSE);
 
       ConsoleHandler.toggle(false);
       handler1.handle(buildLogRecord({ level: LogLevel.INFO }));
@@ -102,8 +102,8 @@ describe("ConsoleHandler", () => {
 
     it("should toggle of all ConsoleHandlers implicitly", () => {
       const mock = jest.spyOn(global.console, "info").mockImplementation();
-      const handler1 = new ConsoleHandler(LogLevel.TRACE);
-      const handler2 = new ConsoleHandler(LogLevel.TRACE);
+      const handler1 = new ConsoleHandler(LogLevel.VERBOSE);
+      const handler2 = new ConsoleHandler(LogLevel.VERBOSE);
 
       ConsoleHandler.toggle();
       handler1.handle(buildLogRecord({ level: LogLevel.INFO }));

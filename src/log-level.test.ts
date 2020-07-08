@@ -2,7 +2,7 @@ import { LogLevel, getLogLevelName } from "./log-level";
 
 describe("getLogLevelName", () => {
   const tests: [LogLevel, keyof typeof LogLevel][] = [
-    [LogLevel.TRACE, "TRACE"],
+    [LogLevel.VERBOSE, "VERBOSE"],
     [LogLevel.DEBUG, "DEBUG"],
     [LogLevel.INFO, "INFO"],
     [LogLevel.WARNING, "WARNING"],

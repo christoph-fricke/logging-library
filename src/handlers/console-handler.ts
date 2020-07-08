@@ -28,8 +28,8 @@ export class ConsoleHandler extends BaseHandler {
     if (!ConsoleHandler.active) return;
 
     switch (record.level) {
-      case LogLevel.TRACE:
-        console.trace(this.format(record));
+      case LogLevel.VERBOSE:
+        console.debug(this.format(record));
         break;
       case LogLevel.DEBUG:
         console.debug(this.format(record));

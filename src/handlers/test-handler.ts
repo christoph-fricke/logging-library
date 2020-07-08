@@ -11,9 +11,9 @@ export class TestHandler extends BaseHandler {
   public readonly records: ILogRecord[] = [];
 
   /**
-   * @param level Defaults to `TRACE`.
+   * @param level Defaults to `VERBOSE`.
    */
-  constructor(level: LogLevel = LogLevel.TRACE) {
+  constructor(level: LogLevel = LogLevel.VERBOSE) {
     super(level);
   }
 
