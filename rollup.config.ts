@@ -9,12 +9,19 @@ export default {
       file: pkg.main,
       format: "umd",
       name: "logging-library",
+      globals: {
+        fs: "fs",
+      },
     },
     {
       file: pkg.module,
       format: "es",
+      globals: {
+        fs: "fs",
+      },
     },
   ],
+  external: ["fs"],
   plugins: [
     typescript({
       clean: true,
