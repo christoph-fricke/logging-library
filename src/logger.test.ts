@@ -191,5 +191,16 @@ describe("Logger", () => {
       expect(handler1.records).toHaveLength(1);
       expect(handler2.records).toHaveLength(1);
     });
+
+    it("should pass the same log record to all handlers", () => {
+      const handler1 = new TestHandler();
+      const handler2 = new TestHandler();
+      const logger = new Logger().addHandler(handler1).addHandler(handler2);
+
+      // We don't care if msg is an error in error and critical case.
+      logger[method](msg as string);
+
+      expect(handler1.records[0]).toBe(handler2.records[0]);
+    });
   });
 });

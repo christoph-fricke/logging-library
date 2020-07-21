@@ -112,14 +112,13 @@ export class Logger implements ILogger {
   }
 
   private notifyHandlers(level: LogLevel, message: string) {
+    const record = new LogRecord(message, {
+      level,
+      context: this._context,
+      metadata: this._metadata,
+    });
     for (const handler of this.handlers) {
-      handler.handle(
-        new LogRecord(message, {
-          level,
-          context: this._context,
-          metadata: this._metadata,
-        })
-      );
+      handler.handle(record);
     }
   }
 
