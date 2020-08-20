@@ -287,7 +287,9 @@ You can change the output format by providing a `format` function as an
 
 The `ConsoleHandler` classed has a static `toggle` method with might be used in
 a browser to toggle of all logs in production but toggle them back on with a
-global function if needed. Example for a global function in Typescript:
+global function if needed. The `toggle` method returns a boolean, indicating
+whether console handlers are on or off after the call. Example for a global
+function in Typescript:
 
 ```typescript
 declare global {

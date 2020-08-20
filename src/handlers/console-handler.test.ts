@@ -75,6 +75,11 @@ describe("ConsoleHandler", () => {
   });
 
   describe("toggle", () => {
+    it("should return the toggle result", () => {
+      expect(ConsoleHandler.toggle(false)).toBe(false);
+      expect(ConsoleHandler.toggle()).toBe(true);
+    });
+
     it("should toggle of all ConsoleHandlers explicitly", () => {
       const mock = jest.spyOn(global.console, "info").mockImplementation();
       const handler1 = new ConsoleHandler(LogLevel.VERBOSE);

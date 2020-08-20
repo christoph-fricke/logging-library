@@ -20,8 +20,9 @@ export class ConsoleHandler extends BaseHandler {
     this.format = options?.format ?? this.defaultFormat;
   }
 
-  static toggle(active?: boolean): void {
+  static toggle(active?: boolean): boolean {
     ConsoleHandler.active = active ?? !ConsoleHandler.active;
+    return ConsoleHandler.active;
   }
 
   protected log(record: ILogRecord): void {
