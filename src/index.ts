@@ -6,3 +6,5 @@ export { LoggerStore } from "./logger-store";
 
 export { ConsoleHandler } from "./handlers/console-handler";
 export { TestHandler } from "./handlers/test-handler";
+export { FileHandler } from "./handlers/file-handler";
+export { StdoutHandler } from "./handlers/stdout-handler";
