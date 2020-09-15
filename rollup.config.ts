@@ -8,11 +8,13 @@ export default {
     {
       file: pkg.main,
       format: "umd",
+      sourcemap: true,
       name: "logging-library",
     },
     {
       file: pkg.module,
       format: "es",
+      sourcemap: true,
     },
   ],
   plugins: [

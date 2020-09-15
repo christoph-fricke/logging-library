@@ -4,6 +4,7 @@
     "module": "ESNext",
     "lib": ["ES6"],
 
+    "importHelpers": true,
     "declaration": true,
     "declarationDir": "./lib/types",
     "rootDir": "./src",
@@ -12,11 +13,10 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
 
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"]
