@@ -19,6 +19,9 @@ export class LoggerStore {
   /**
    * Removes a logger for a given key.
    * @returns True if a logger was removed. False otherwise.
+   * @deprecated There is no real reason to be able to dynamically remove a logger
+   * as it is always statically added in code. To remove a logger just remove
+   * the add statement which is more efficient and easier to reason about.
    */
   static remove(key: string): boolean {
     return this.store.delete(key);
