@@ -70,7 +70,6 @@ function asString(data: unknown): string {
     typeof data === "number" ||
     typeof data === "bigint" ||
     typeof data === "boolean" ||
-    typeof data === "undefined" ||
     typeof data === "symbol"
   ) {
     return String(data);

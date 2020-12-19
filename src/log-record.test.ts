@@ -30,6 +30,14 @@ describe("LogRecord", () => {
     expect(record.date).toStrictEqual(date);
   });
 
+  // Some helpers for the following test cases
+  function sum(a: number, b: number) {
+    return a + b;
+  }
+  const stackErr = new Error("Stack error");
+  const testErr = Error("Test error");
+  testErr.stack = undefined;
+
   const cases: [args: unknown[], parsed: string][] = [
     [[], ""],
     [["log message"], "log message"],
@@ -42,14 +50,7 @@ describe("LogRecord", () => {
     [[{ key: 1, key2: 2 }], '{"key":1,"key2":2}'],
     [[null], "null"],
     [[undefined, 1], "undefined 1"],
-    [
-      [
-        function sum(a: number, b: number) {
-          return a + b;
-        },
-      ],
-      "[Function sum]",
-    ],
+    [[sum], "[Function sum]"],
     [
       [
         [1, 2, 3],
@@ -57,6 +58,8 @@ describe("LogRecord", () => {
       ],
       "[1,2,3] [4,5,6]",
     ],
+    [[stackErr], stackErr.stack as string],
+    [[testErr], "Test error"],
   ];
 
   it.each(cases)('Given arguments "%s" are parsed to "%s"', (args, parsed) => {

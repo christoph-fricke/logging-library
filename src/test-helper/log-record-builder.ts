@@ -7,7 +7,8 @@ export function buildLogRecord(overrides?: Partial<ILogRecord>): ILogRecord {
     date: new Date(),
     level: LogLevel.DEBUG,
     levelName: getLogLevelName(overrides?.level ?? LogLevel.DEBUG),
-    message: "Test message",
+    args: ["message", 123],
+    message: "message 123",
     metadata: { test: "Test meta" },
     ...overrides,
   };
