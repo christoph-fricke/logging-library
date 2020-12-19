@@ -11,6 +11,10 @@ class SpyHandler extends BaseHandler {
 }
 
 describe("BaseHandler", () => {
+  beforeEach(() => {
+    logMock.mockReset();
+  });
+
   it("should accept a level as a constructor argument", () => {
     const handler = new SpyHandler(LogLevel.INFO);
 

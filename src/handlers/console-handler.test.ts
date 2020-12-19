@@ -13,8 +13,15 @@ describe("ConsoleHandler", () => {
   });
 
   describe("format", () => {
+    const mock = jest.spyOn(global.console, "info").mockImplementation();
+
+    afterEach(() => {
+      mock.mockReset();
+    });
+
+    afterAll(() => mock.mockRestore());
+
     it("should be able to use a custom format", () => {
-      const mock = jest.spyOn(global.console, "info").mockImplementation();
       const format = (record: ILogRecord) =>
         `${record.context} - ${record.message}`;
 
@@ -27,23 +34,20 @@ describe("ConsoleHandler", () => {
         })
       );
 
+      expect(mock).toHaveBeenCalledTimes(1);
       expect(mock).toHaveBeenCalledWith("Test - test message");
-
-      mock.mockRestore();
     });
 
     it("should use the correct default format", () => {
-      const mock = jest.spyOn(global.console, "info").mockImplementation();
       const handler = new ConsoleHandler(LogLevel.INFO);
       const record = buildLogRecord({ level: LogLevel.INFO });
 
       handler.handle(record);
 
+      expect(mock).toHaveBeenCalledTimes(1);
       expect(mock).toHaveBeenCalledWith(
         `${record.levelName}: [${record.context}] - ${record.message}`
       );
-
-      mock.mockRestore();
     });
   });
 
@@ -75,13 +79,22 @@ describe("ConsoleHandler", () => {
   });
 
   describe("toggle", () => {
+    const mock = jest.spyOn(global.console, "info").mockImplementation();
+
+    beforeEach(() => {
+      mock.mockReset();
+      // Restore the toggle so we do not break other tests as it is a static property.
+      ConsoleHandler.toggle(true);
+    });
+
+    afterAll(() => mock.mockRestore());
+
     it("should return the toggle result", () => {
       expect(ConsoleHandler.toggle(false)).toBe(false);
       expect(ConsoleHandler.toggle()).toBe(true);
     });
 
     it("should toggle of all ConsoleHandlers explicitly", () => {
-      const mock = jest.spyOn(global.console, "info").mockImplementation();
       const handler1 = new ConsoleHandler(LogLevel.VERBOSE);
       const handler2 = new ConsoleHandler(LogLevel.VERBOSE);
 
@@ -90,14 +103,9 @@ describe("ConsoleHandler", () => {
       handler2.handle(buildLogRecord({ level: LogLevel.INFO }));
 
       expect(mock).not.toHaveBeenCalled();
-
-      // Restore the toggle so we do not break other tests as it is a static property.
-      ConsoleHandler.toggle(true);
-      mock.mockRestore();
     });
 
     it("should toggle of all ConsoleHandlers implicitly", () => {
-      const mock = jest.spyOn(global.console, "info").mockImplementation();
       const handler1 = new ConsoleHandler(LogLevel.VERBOSE);
       const handler2 = new ConsoleHandler(LogLevel.VERBOSE);
 
@@ -106,10 +114,6 @@ describe("ConsoleHandler", () => {
       handler2.handle(buildLogRecord({ level: LogLevel.INFO }));
 
       expect(mock).not.toHaveBeenCalled();
-
-      // Restore the toggle so we do not break other tests as it is a static property.
-      ConsoleHandler.toggle(true);
-      mock.mockRestore();
     });
   });
 });
