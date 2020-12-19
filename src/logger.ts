@@ -4,22 +4,22 @@ import { LogRecord } from "./log-record";
 
 export interface ILogger {
   /** Sends a log record with the level VERBOSE to all handlers.*/
-  verbose(msg: string): void;
+  verbose(...args: unknown[]): void;
 
   /** Sends a log record with the level DEBUG to all handlers.*/
-  debug(msg: string): void;
+  debug(...args: unknown[]): void;
 
   /** Sends a log record with the level INFO to all handlers.*/
-  info(msg: string): void;
+  info(...args: unknown[]): void;
 
   /** Sends a log record with the level WARNING to all handlers.*/
-  warning(msg: string): void;
+  warning(...args: unknown[]): void;
 
   /** Sends a log record with the level ERROR to all handlers.*/
-  error(err: string | Error): void;
+  error(...args: unknown[]): void;
 
   /** Sends a log record with the level CRITICAL to all handlers.*/
-  critical(err: string | Error): void;
+  critical(...args: unknown[]): void;
 
   /**
    * Creates a new `logger` scoped to a given `context`. All current handlers and metadata
@@ -111,8 +111,8 @@ export class Logger implements ILogger {
     return this;
   }
 
-  private notifyHandlers(level: LogLevel, message: string) {
-    const record = new LogRecord(message, {
+  private notifyHandlers(level: LogLevel, args: unknown[]) {
+    const record = new LogRecord(args, {
       level,
       context: this._context,
       metadata: this._metadata,
@@ -122,31 +122,27 @@ export class Logger implements ILogger {
     }
   }
 
-  verbose(msg: string): void {
-    this.notifyHandlers(LogLevel.VERBOSE, msg);
+  verbose(...args: unknown[]): void {
+    this.notifyHandlers(LogLevel.VERBOSE, args);
   }
 
-  debug(msg: string): void {
-    this.notifyHandlers(LogLevel.DEBUG, msg);
+  debug(...args: unknown[]): void {
+    this.notifyHandlers(LogLevel.DEBUG, args);
   }
 
-  info(msg: string): void {
-    this.notifyHandlers(LogLevel.INFO, msg);
+  info(...args: unknown[]): void {
+    this.notifyHandlers(LogLevel.INFO, args);
   }
 
-  warning(msg: string): void {
-    this.notifyHandlers(LogLevel.WARNING, msg);
+  warning(...args: unknown[]): void {
+    this.notifyHandlers(LogLevel.WARNING, args);
   }
 
-  error(err: string | Error): void {
-    const message = typeof err === "string" ? err : err.message;
-
-    this.notifyHandlers(LogLevel.ERROR, message);
+  error(...args: unknown[]): void {
+    this.notifyHandlers(LogLevel.ERROR, args);
   }
 
-  critical(err: string | Error): void {
-    const message = typeof err === "string" ? err : err.message;
-
-    this.notifyHandlers(LogLevel.CRITICAL, message);
+  critical(...args: unknown[]): void {
+    this.notifyHandlers(LogLevel.CRITICAL, args);
   }
 }

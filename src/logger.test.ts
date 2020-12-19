@@ -147,35 +147,25 @@ describe("Logger", () => {
   });
 
   type Method = "verbose" | "debug" | "info" | "warning" | "error" | "critical";
-  const tests: [Method, string | Error, LogLevel][] = [
+  const tests: [level: Method, msg: string, level: LogLevel][] = [
     ["verbose", "test message", LogLevel.VERBOSE],
     ["debug", "test message", LogLevel.DEBUG],
     ["info", "test message", LogLevel.INFO],
     ["warning", "test message", LogLevel.WARNING],
     ["error", "test message", LogLevel.ERROR],
-    ["error", new Error("test Error"), LogLevel.ERROR],
     ["critical", "test message", LogLevel.CRITICAL],
-    ["critical", new Error("test Error"), LogLevel.CRITICAL],
   ];
 
   describe.each(tests)("%s", (method, msg, level) => {
-    it(`creates a log record with the given message, metadata and level ${level}`, () => {
+    it(`creates a log record with the given args, metadata and level ${level}`, () => {
       const handler = new TestHandler();
       const logger = new Logger()
         .addMetadata({ key1: "Test" })
         .addHandler(handler);
 
-      if (typeof msg === "string") {
-        logger[method](msg as string);
+      logger[method](msg);
 
-        expect(handler.records[0].message).toBe(msg);
-      } else {
-        // We have an error object as msg which is only for error or critical.
-        logger[method as "error" | "critical"](msg);
-
-        expect(handler.records[0].message).toBe(msg.message);
-      }
-
+      expect(handler.records[0].args).toStrictEqual([msg]);
       expect(handler.records[0].level).toBe(level);
       expect(handler.records[0].metadata).toStrictEqual({ key1: "Test" });
     });
@@ -185,8 +175,7 @@ describe("Logger", () => {
       const handler2 = new TestHandler();
       const logger = new Logger().addHandler(handler1).addHandler(handler2);
 
-      // We don't care if msg is an error in error and critical case.
-      logger[method](msg as string);
+      logger[method](msg);
 
       expect(handler1.records).toHaveLength(1);
       expect(handler2.records).toHaveLength(1);
@@ -197,8 +186,7 @@ describe("Logger", () => {
       const handler2 = new TestHandler();
       const logger = new Logger().addHandler(handler1).addHandler(handler2);
 
-      // We don't care if msg is an error in error and critical case.
-      logger[method](msg as string);
+      logger[method](msg);
 
       expect(handler1.records[0]).toBe(handler2.records[0]);
     });

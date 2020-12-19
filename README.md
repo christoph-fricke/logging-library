@@ -215,12 +215,12 @@ Interface that every logger implements.
 
 ```typescript
 interface ILogger {
-  verbose(msg: string): void;
-  debug(msg: string): void;
-  info(msg: string): void;
-  warning(msg: string): void;
-  error(err: string | Error): void;
-  critical(err: string | Error): void;
+  verbose(...args: unknown[]): void;
+  debug(...args: unknown[]): void;
+  info(...args: unknown[]): void;
+  warning(...args: unknown[]): void;
+  error(...args: unknown[]): void;
+  critical(...args: unknown[]): void;
 
   withContext(context: string): ILogger;
   addHandler(
@@ -260,7 +260,9 @@ interface ILogRecord {
   readonly levelName: keyof typeof LogLevel;
   /** Context used for this record. */
   readonly context: string;
-  /** Stored message. */
+  /** Arguments that were passed to the logger. */
+  readonly args: unknown[];
+  /** Arguments formatted as a string. */
   readonly message: string;
   /** Timestamp at which the log record was created. */
   readonly date: Date;
