@@ -1,6 +1,6 @@
 # logging-library
 
-[![GitHub issues](https://flat.badgen.net/github/issues/christoph-fricke/logging-library)](https://github.com/christoph-fricke/logging-library/issues)
+[![GitHub issues](https://flat.badgen.net/github/open-issues/christoph-fricke/logging-library)](https://github.com/christoph-fricke/logging-library/issues)
 [![npm version](https://flat.badgen.net/npm/v/logging-library)](https://www.npmjs.com/package/logging-library)
 ![Dependencies](https://flat.badgen.net/david/dep/christoph-fricke/logging-library)
 ![BundleSize](https://flat.badgen.net/bundlephobia/minzip/logging-library)
