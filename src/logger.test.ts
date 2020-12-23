@@ -146,14 +146,12 @@ describe("Logger", () => {
     });
   });
 
-  type Method = "verbose" | "debug" | "info" | "warning" | "error" | "critical";
+  type Method = "debug" | "info" | "warn" | "error";
   const tests: [level: Method, msg: string, level: LogLevel][] = [
-    ["verbose", "test message", LogLevel.VERBOSE],
     ["debug", "test message", LogLevel.DEBUG],
     ["info", "test message", LogLevel.INFO],
-    ["warning", "test message", LogLevel.WARNING],
+    ["warn", "test message", LogLevel.WARN],
     ["error", "test message", LogLevel.ERROR],
-    ["critical", "test message", LogLevel.CRITICAL],
   ];
 
   describe.each(tests)("%s", (method, msg, level) => {

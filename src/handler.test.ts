@@ -22,9 +22,9 @@ describe("BaseHandler", () => {
   });
 
   it("should accept an level array as a constructor argument", () => {
-    const handler = new SpyHandler([LogLevel.INFO, LogLevel.CRITICAL]);
+    const handler = new SpyHandler([LogLevel.INFO, LogLevel.ERROR]);
 
-    expect(handler.level).toStrictEqual([LogLevel.INFO, LogLevel.CRITICAL]);
+    expect(handler.level).toStrictEqual([LogLevel.INFO, LogLevel.ERROR]);
   });
 
   describe("handle", () => {
@@ -41,7 +41,7 @@ describe("BaseHandler", () => {
     it("should delegate logging to a subclass if the record level is greater than the given level", () => {
       const handler = new SpyHandler(LogLevel.INFO);
       const record = buildLogRecord({ level: LogLevel.ERROR });
-      const record2 = buildLogRecord({ level: LogLevel.WARNING });
+      const record2 = buildLogRecord({ level: LogLevel.WARN });
 
       handler.handle(record);
       handler.handle(record2);
@@ -54,7 +54,7 @@ describe("BaseHandler", () => {
     it("should not not delegate logging to a subclass if the record level is less than the given level", () => {
       const handler = new SpyHandler(LogLevel.ERROR);
       const record = buildLogRecord({ level: LogLevel.INFO });
-      const record2 = buildLogRecord({ level: LogLevel.WARNING });
+      const record2 = buildLogRecord({ level: LogLevel.WARN });
 
       handler.handle(record);
       handler.handle(record2);
@@ -63,9 +63,9 @@ describe("BaseHandler", () => {
     });
 
     it("should delegate logging to a subclass if the record level is included in the given array", () => {
-      const handler = new SpyHandler([LogLevel.INFO, LogLevel.CRITICAL]);
+      const handler = new SpyHandler([LogLevel.INFO, LogLevel.ERROR]);
       const record = buildLogRecord({ level: LogLevel.INFO });
-      const record2 = buildLogRecord({ level: LogLevel.CRITICAL });
+      const record2 = buildLogRecord({ level: LogLevel.ERROR });
 
       handler.handle(record);
       handler.handle(record2);
@@ -76,8 +76,8 @@ describe("BaseHandler", () => {
     });
 
     it("should not delegate logging to a subclass if the record level is not included in the given array", () => {
-      const handler = new SpyHandler([LogLevel.INFO, LogLevel.CRITICAL]);
-      const record = buildLogRecord({ level: LogLevel.WARNING });
+      const handler = new SpyHandler([LogLevel.INFO, LogLevel.ERROR]);
+      const record = buildLogRecord({ level: LogLevel.WARN });
 
       handler.handle(record);
 

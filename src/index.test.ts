@@ -20,7 +20,7 @@ test("Core logging functionality works as expected", () => {
 
   const scoped = logger.withContext("Authentication");
 
-  scoped.warning("This log is using the 'Authentication' context");
+  scoped.warn("This log is using the 'Authentication' context");
 
   scoped.debug("Some debug information");
 
@@ -28,7 +28,7 @@ test("Core logging functionality works as expected", () => {
     `INFO: [Default] - Some log using the default context.`
   );
   expect(mockWarn).toHaveBeenCalledWith(
-    `WARNING: [Authentication] - This log is using the 'Authentication' context`
+    `WARN: [Authentication] - This log is using the 'Authentication' context`
   );
   expect(mockDebug).not.toHaveBeenCalled();
 
@@ -59,7 +59,7 @@ test("Core custom handler functionality works as expected", () => {
       CustomHandler.records.push(record);
     }
   }
-  const logger = new Logger().addHandler(new CustomHandler(LogLevel.VERBOSE));
+  const logger = new Logger().addHandler(new CustomHandler(LogLevel.DEBUG));
 
   logger.info("test message");
 

@@ -2,12 +2,10 @@ import { LogLevel, getLogLevelName } from "./log-level";
 
 describe("getLogLevelName", () => {
   const tests: [LogLevel, keyof typeof LogLevel][] = [
-    [LogLevel.VERBOSE, "VERBOSE"],
     [LogLevel.DEBUG, "DEBUG"],
     [LogLevel.INFO, "INFO"],
-    [LogLevel.WARNING, "WARNING"],
+    [LogLevel.WARN, "WARN"],
     [LogLevel.ERROR, "ERROR"],
-    [LogLevel.CRITICAL, "CRITICAL"],
   ];
 
   it.each(tests)("Level %d return the name %s", (level, name) => {

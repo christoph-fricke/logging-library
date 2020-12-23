@@ -29,22 +29,16 @@ export class ConsoleHandler extends BaseHandler {
     if (!ConsoleHandler.active) return;
 
     switch (record.level) {
-      case LogLevel.VERBOSE:
-        console.debug(this.format(record));
-        break;
       case LogLevel.DEBUG:
         console.debug(this.format(record));
         break;
       case LogLevel.INFO:
         console.info(this.format(record));
         break;
-      case LogLevel.WARNING:
+      case LogLevel.WARN:
         console.warn(this.format(record));
         break;
       case LogLevel.ERROR:
-        console.error(this.format(record));
-        break;
-      case LogLevel.CRITICAL:
         console.error(this.format(record));
         break;
     }

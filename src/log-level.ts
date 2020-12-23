@@ -2,12 +2,10 @@
  * Enum representing each log level.
  */
 export enum LogLevel {
-  VERBOSE = 10,
-  DEBUG = 20,
-  INFO = 30,
-  WARNING = 40,
-  ERROR = 50,
-  CRITICAL = 60,
+  DEBUG = 10,
+  INFO = 20,
+  WARN = 30,
+  ERROR = 40,
 }
 
 /**
@@ -18,18 +16,14 @@ export enum LogLevel {
  */
 export function getLogLevelName(level: LogLevel): keyof typeof LogLevel {
   switch (level) {
-    case LogLevel.VERBOSE:
-      return "VERBOSE";
     case LogLevel.DEBUG:
       return "DEBUG";
     case LogLevel.INFO:
       return "INFO";
-    case LogLevel.WARNING:
-      return "WARNING";
+    case LogLevel.WARN:
+      return "WARN";
     case LogLevel.ERROR:
       return "ERROR";
-    case LogLevel.CRITICAL:
-      return "CRITICAL";
     default:
       throw new TypeError(
         "Unknown LogLevel provided. Please use the enum LogLevel for valid levels."

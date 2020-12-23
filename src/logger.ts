@@ -3,9 +3,6 @@ import { ILogHandler } from "./handler";
 import { LogRecord } from "./log-record";
 
 export interface ILogger {
-  /** Sends a log record with the level VERBOSE to all handlers.*/
-  verbose(...args: unknown[]): void;
-
   /** Sends a log record with the level DEBUG to all handlers.*/
   debug(...args: unknown[]): void;
 
@@ -13,13 +10,10 @@ export interface ILogger {
   info(...args: unknown[]): void;
 
   /** Sends a log record with the level WARNING to all handlers.*/
-  warning(...args: unknown[]): void;
+  warn(...args: unknown[]): void;
 
   /** Sends a log record with the level ERROR to all handlers.*/
   error(...args: unknown[]): void;
-
-  /** Sends a log record with the level CRITICAL to all handlers.*/
-  critical(...args: unknown[]): void;
 
   /**
    * Creates a new `logger` scoped to a given `context`. All current handlers and metadata
@@ -122,10 +116,6 @@ export class Logger implements ILogger {
     }
   }
 
-  verbose(...args: unknown[]): void {
-    this.notifyHandlers(LogLevel.VERBOSE, args);
-  }
-
   debug(...args: unknown[]): void {
     this.notifyHandlers(LogLevel.DEBUG, args);
   }
@@ -134,15 +124,11 @@ export class Logger implements ILogger {
     this.notifyHandlers(LogLevel.INFO, args);
   }
 
-  warning(...args: unknown[]): void {
-    this.notifyHandlers(LogLevel.WARNING, args);
+  warn(...args: unknown[]): void {
+    this.notifyHandlers(LogLevel.WARN, args);
   }
 
   error(...args: unknown[]): void {
     this.notifyHandlers(LogLevel.ERROR, args);
-  }
-
-  critical(...args: unknown[]): void {
-    this.notifyHandlers(LogLevel.CRITICAL, args);
   }
 }

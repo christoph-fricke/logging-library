@@ -24,8 +24,7 @@
 1. Written in TypeScript with a **fully typed**, **class based** api.
 1. Create custom log handlers. Included are a `ConsoleHandler` and
    `TestHandler`.
-1. Six different log levels. `VERBOSE`, `DEBUG`, `INFO`, `WARNING`, `ERROR` and
-   `CRITICAL`.
+1. Four different log levels. `DEBUG`, `INFO`, `WARNING` and `ERROR`.
 1. Attach any metadata to you logs for advanced, structured logging.
 1. [Fluent interface](https://wikipedia.org/wiki/Fluent_interface) for easy
    configuration.
@@ -201,12 +200,10 @@ provided in a log record will not handle the record. All enum values from low to
 high:
 
 ```
-VERBOSE = 10
-DEBUG = 20
-INFO = 30
-WARNING = 40
-ERROR = 50
-CRITICAL = 60
+DEBUG
+INFO
+WARNING
+ERROR
 ```
 
 ### `ILogger`
@@ -215,12 +212,10 @@ Interface that every logger implements.
 
 ```typescript
 interface ILogger {
-  verbose(...args: unknown[]): void;
   debug(...args: unknown[]): void;
   info(...args: unknown[]): void;
-  warning(...args: unknown[]): void;
+  warn(...args: unknown[]): void;
   error(...args: unknown[]): void;
-  critical(...args: unknown[]): void;
 
   withContext(context: string): ILogger;
   addHandler(
@@ -310,7 +305,7 @@ globalThis.toggleConsoleLogging = ConsoleHandler.toggle;
 class TestHandler extends BaseHandler {
   public readonly records: ILogRecord[] = [];
 
-  constructor(level: LogLevel | LogLevel[] = LogLevel.VERBOSE) {
+  constructor(level: LogLevel | LogLevel[] = LogLevel.DEBUG) {
     super(level);
   }
 
