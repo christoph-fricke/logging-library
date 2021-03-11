@@ -31,4 +31,17 @@ describe("TestHandler", () => {
 
     expect(handler.records).toContain(record);
   });
+
+  it("removes all stored records if clear is called", () => {
+    const handler = new TestHandler();
+
+    handler.handle(buildLogRecord());
+    handler.handle(buildLogRecord());
+    handler.handle(buildLogRecord());
+    expect(handler.records).toHaveLength(3);
+
+    handler.clear();
+
+    expect(handler.records).toStrictEqual([]);
+  });
 });

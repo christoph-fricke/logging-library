@@ -7,17 +7,28 @@ import { LogLevel } from "../log-level";
  * not flood the console.
  */
 export class TestHandler extends BaseHandler {
-  /** Queue with all log records handled by this handler. */
-  public readonly records: ILogRecord[] = [];
+  private _records: ILogRecord[];
 
   /**
    * @param level Defaults to `DEBUG`.
    */
   constructor(level: LogLevel | LogLevel[] = LogLevel.DEBUG) {
     super(level);
+
+    this._records = [];
+  }
+
+  /** Queue with all log records handled by this handler. */
+  get records(): ReadonlyArray<ILogRecord> {
+    return this._records;
   }
 
   protected log(record: ILogRecord): void {
-    this.records.push(record);
+    this._records.push(record);
+  }
+
+  /** Removes all stored records from this handler. */
+  public clear(): void {
+    this._records = [];
   }
 }
