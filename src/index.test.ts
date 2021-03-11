@@ -3,11 +3,25 @@ import {
   Logger,
   ConsoleHandler,
   LogLevel,
-  LoggerStore,
-  TestHandler,
   BaseHandler,
   ILogRecord,
+  getLogger,
+  setLoggerAssignment
 } from "./";
+
+test("A logger can be set and later required", () => {
+  const mockInfo = jest.spyOn(global.console, "info").mockImplementation();
+  const logger = new Logger().addHandler(new ConsoleHandler(LogLevel.INFO));
+
+  setLoggerAssignment(id => logger.withContext(id?.toString() ?? "default"));
+
+  const assigned = getLogger("test");
+  assigned.info("Test message");
+
+  expect(mockInfo).toHaveBeenCalledWith(
+    `INFO: [test] - Test message`
+  );
+})
 
 test("Core logging functionality works as expected", () => {
   const mockInfo = jest.spyOn(global.console, "info").mockImplementation();
@@ -35,21 +49,6 @@ test("Core logging functionality works as expected", () => {
   mockInfo.mockRestore();
   mockWarn.mockRestore();
   mockDebug.mockRestore();
-});
-
-test("Core store functionality works as expected", () => {
-  const logger = new Logger().addHandler(new TestHandler());
-  LoggerStore.add("first", logger);
-
-  expect(LoggerStore.get("first")).toBe(logger);
-
-  const logger2 = new Logger().addHandler(new TestHandler());
-  LoggerStore.add("first", logger2);
-
-  expect(LoggerStore.get("first")).toBe(logger2);
-
-  expect(LoggerStore.remove("first")).toBeTruthy();
-  expect(LoggerStore.get("first")).toBeUndefined();
 });
 
 test("Core custom handler functionality works as expected", () => {
