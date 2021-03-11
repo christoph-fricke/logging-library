@@ -6,7 +6,7 @@
 
     "importHelpers": true,
     "declaration": true,
-    "declarationDir": "./lib/types",
+    "declarationDir": "./dist/types",
     "rootDir": "./src",
 
     "strict": true,

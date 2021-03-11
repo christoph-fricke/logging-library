@@ -16,18 +16,18 @@
   ],
   "homepage": "https://logging-library.vercel.app",
   "repository": "github:christoph-fricke/logging-library",
-  "main": "lib/umd/index.js",
-  "module": "lib/esm/index.js",
-  "types": "lib/types/index.d.ts",
+  "main": "dist/umd/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
   "sideEffects": false,
   "files": [
-    "lib",
+    "dist",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "prepublishOnly": " npm test && npm run build",
-    "build": "rm -rf lib && rollup -c rollup.config.ts",
+    "build": "rm -rf dist && rollup -c rollup.config.ts",
     "build:docs": "rm -rf docs && typedoc --out docs src/index.ts",
     "format": "prettier --write .",
     "lint": "eslint . && prettier -c .",
