@@ -1,5 +1,5 @@
 import { BaseHandler } from "../handler";
-import { ILogRecord } from "../log-record";
+import { LogRecord } from "../log-record";
 import { LogLevel } from "../log-level";
 
 /**
@@ -7,7 +7,7 @@ import { LogLevel } from "../log-level";
  * not flood the console.
  */
 export class TestHandler extends BaseHandler {
-  private _records: ILogRecord[];
+  private _records: LogRecord[];
 
   /**
    * @param level Defaults to `DEBUG`.
@@ -19,11 +19,11 @@ export class TestHandler extends BaseHandler {
   }
 
   /** Queue with all log records handled by this handler. */
-  get records(): ReadonlyArray<ILogRecord> {
+  get records(): ReadonlyArray<LogRecord> {
     return this._records;
   }
 
-  protected log(record: ILogRecord): void {
+  protected log(record: LogRecord): void {
     this._records.push(record);
   }
 

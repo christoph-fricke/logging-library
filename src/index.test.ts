@@ -4,24 +4,22 @@ import {
   ConsoleHandler,
   LogLevel,
   BaseHandler,
-  ILogRecord,
   getLogger,
-  setLoggerAssignment
+  setLoggerAssignment,
 } from "./";
+import { LogRecord } from "./log-record";
 
 test("A logger can be set and later required", () => {
   const mockInfo = jest.spyOn(global.console, "info").mockImplementation();
   const logger = new Logger().addHandler(new ConsoleHandler(LogLevel.INFO));
 
-  setLoggerAssignment(id => logger.withContext(id?.toString() ?? "default"));
+  setLoggerAssignment((id) => logger.withContext(id?.toString() ?? "default"));
 
   const assigned = getLogger("test");
   assigned.info("Test message");
 
-  expect(mockInfo).toHaveBeenCalledWith(
-    `INFO: [test] - Test message`
-  );
-})
+  expect(mockInfo).toHaveBeenCalledWith(`INFO: [test] - Test message`);
+});
 
 test("Core logging functionality works as expected", () => {
   const mockInfo = jest.spyOn(global.console, "info").mockImplementation();
@@ -53,8 +51,8 @@ test("Core logging functionality works as expected", () => {
 
 test("Core custom handler functionality works as expected", () => {
   class CustomHandler extends BaseHandler {
-    static records: ILogRecord[] = [];
-    log(record: ILogRecord) {
+    static records: LogRecord[] = [];
+    protected log(record: LogRecord): void {
       CustomHandler.records.push(record);
     }
   }

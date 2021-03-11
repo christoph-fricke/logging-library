@@ -1,9 +1,9 @@
 import { BaseHandler } from "../handler";
-import { ILogRecord } from "../log-record";
+import { LogRecord } from "../log-record";
 import { LogLevel } from "../log-level";
 
 interface IConsoleHandlerOptions {
-  format?: (record: ILogRecord) => string;
+  format?: (record: LogRecord) => string;
 }
 
 /**
@@ -13,7 +13,7 @@ interface IConsoleHandlerOptions {
 export class ConsoleHandler extends BaseHandler {
   private static active = true;
 
-  private readonly format: (record: ILogRecord) => string;
+  private readonly format: (record: LogRecord) => string;
 
   constructor(level: LogLevel | LogLevel[], options?: IConsoleHandlerOptions) {
     super(level);
@@ -25,7 +25,7 @@ export class ConsoleHandler extends BaseHandler {
     return ConsoleHandler.active;
   }
 
-  protected log(record: ILogRecord): void {
+  protected log(record: LogRecord): void {
     if (!ConsoleHandler.active) return;
 
     switch (record.level) {
@@ -44,7 +44,7 @@ export class ConsoleHandler extends BaseHandler {
     }
   }
 
-  private defaultFormat(record: ILogRecord): string {
+  private defaultFormat(record: LogRecord): string {
     return `${record.levelName}: [${record.context}] - ${record.message}`;
   }
 }

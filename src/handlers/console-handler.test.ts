@@ -1,7 +1,7 @@
 import { ConsoleHandler } from "./console-handler";
 import { LogLevel } from "../log-level";
 import { buildLogRecord } from "../test-helper/log-record-builder";
-import { ILogRecord } from "../log-record";
+import { LogRecord } from "../log-record";
 
 describe("ConsoleHandler", () => {
   it("should initialize its level to the given level or level array", () => {
@@ -22,7 +22,7 @@ describe("ConsoleHandler", () => {
     afterAll(() => mock.mockRestore());
 
     it("should be able to use a custom format", () => {
-      const format = (record: ILogRecord) =>
+      const format = (record: LogRecord) =>
         `${record.context} - ${record.message}`;
 
       const handler = new ConsoleHandler(LogLevel.INFO, { format });

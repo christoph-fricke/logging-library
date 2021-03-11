@@ -1,5 +1,5 @@
 import { LogLevel } from "./log-level";
-import { ILogHandler } from "./handler";
+import { LogHandler } from "./handler";
 import { LogRecord } from "./log-record";
 
 export interface ILogger {
@@ -30,7 +30,7 @@ export interface ILogger {
    * Allows `handlers` to be added conditionally while using a fluent api.
    */
   addHandler(
-    handler: ILogHandler,
+    handler: LogHandler,
     condition?: boolean | (() => boolean)
   ): ILogger;
 
@@ -55,7 +55,7 @@ export interface ILogger {
 export class Logger implements ILogger {
   private readonly _context: string;
   private _metadata: Record<string, unknown> = {};
-  private handlers: ILogHandler[] = [];
+  private handlers: LogHandler[] = [];
 
   /**
    * Creates a new logger with no handlers configured. Add handlers with `addHandler`
@@ -86,7 +86,7 @@ export class Logger implements ILogger {
     return this;
   }
 
-  private addHandlers(handlers: ILogHandler[]): ILogger {
+  private addHandlers(handlers: LogHandler[]): ILogger {
     for (const handler of handlers) {
       this.handlers.push(handler);
     }
@@ -95,7 +95,7 @@ export class Logger implements ILogger {
   }
 
   addHandler(
-    handler: ILogHandler,
+    handler: LogHandler,
     condition?: boolean | (() => boolean)
   ): ILogger {
     if (typeof condition === "boolean" && !condition) return this;

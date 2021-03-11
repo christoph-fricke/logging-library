@@ -1,7 +1,7 @@
-import { ILogRecord } from "../log-record";
+import { LogRecord } from "../log-record";
 import { LogLevel, getLogLevelName } from "../log-level";
 
-export function buildLogRecord(overrides?: Partial<ILogRecord>): ILogRecord {
+export function buildLogRecord(overrides?: Partial<LogRecord>): LogRecord {
   return {
     context: "Test Context",
     date: new Date(),

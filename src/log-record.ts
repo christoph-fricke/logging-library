@@ -1,9 +1,16 @@
 import { LogLevel, getLogLevelName } from "./log-level";
 
+interface LogRecordConfig {
+  level: LogLevel;
+  context: string;
+  metadata: Record<string, unknown>;
+}
+
 /**
- * Represents a log record.
+ * A log record contains a information about a logging attempt. This information
+ * is passed to all registered `LogHandler` by a `Logger` instance.
  */
-export interface ILogRecord {
+export class LogRecord {
   /** Level used to create this record. */
   readonly level: LogLevel;
   /** String representation of the level. */
@@ -12,31 +19,11 @@ export interface ILogRecord {
   readonly context: string;
   /** Arguments that were passed to the logger. */
   readonly args: unknown[];
-  /** Arguments formatted as a string. */
+  /** Arguments formatted as a string. Multiple arguments are separated by a space. */
   readonly message: string;
   /** Timestamp at which the log record was created. */
   readonly date: Date;
   /** Extra meta data configured with a logger. */
-  readonly metadata: Record<string, unknown>;
-}
-
-interface LogRecordConfig {
-  level: LogLevel;
-  context: string;
-  metadata: Record<string, unknown>;
-}
-
-/**
- * Implements `ILogRecord`. Should be used to construct new records.
- * @hidden
- */
-export class LogRecord implements ILogRecord {
-  readonly level: LogLevel;
-  readonly levelName: keyof typeof LogLevel;
-  readonly context: string;
-  readonly args: unknown[];
-  readonly message: string;
-  readonly date: Date;
   readonly metadata: Record<string, unknown>;
 
   constructor(args: unknown[], config: LogRecordConfig) {
