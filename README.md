@@ -1,9 +1,9 @@
 # logging-library
 
-[![GitHub issues](https://flat.badgen.net/github/open-issues/christoph-fricke/logging-library)](https://github.com/christoph-fricke/logging-library/issues)
-[![npm version](https://flat.badgen.net/npm/v/logging-library)](https://www.npmjs.com/package/logging-library)
-![Dependencies](https://flat.badgen.net/david/dep/christoph-fricke/logging-library)
-![BundleSize](https://flat.badgen.net/bundlephobia/minzip/logging-library)
+[![GitHub issues](https://shields.io/github/issues-raw/christoph-fricke/logging-library?style=for-the-badge)](https://github.com/christoph-fricke/logging-library/issues)
+[![latest release](https://shields.io/github/v/release/christoph-fricke/logging-library?style=for-the-badge)](https://github.com/christoph-fricke/logging-library/releases/latest)
+![dependencies](https://shields.io/david/christoph-fricke/logging-library?style=for-the-badge)
+[![bundle size](https://shields.io/bundlephobia/minzip/logging-library?style=for-the-badge)](https://bundlephobia.com/result?p=logging-library)
 
 > Extensible logging module for **Node**, **Deno** and **browsers**. Inspired by
 > Deno std/log and .Net Core `ILogger`.
