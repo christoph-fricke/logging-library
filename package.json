@@ -23,7 +23,7 @@
   "files": [
     "lib",
     "README.md",
-    "LICENSE.md"
+    "LICENSE"
   ],
   "scripts": {
     "prepublishOnly": " npm test && npm run build",
